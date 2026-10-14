@@ -1,0 +1,7 @@
+For this assignment, I created a company directory using a binary tree. Each employee has a name and two possible spots for direct reports, called left and right. The team lead is the root, which means they are at the top of the tree.
+
+Recursive insertion works by starting at the team lead and checking whether that person is the manager entered by the user. If they are, the program checks the requested side and adds the employee if that spot is empty. If they are not the manager, the program searches the left and right branches by calling the same method again. This continues until the manager is found or there are no more employees to check.
+
+The challenging part for me was understanding where everything belonged in the code. Python can be confusing, especially with indentation and remembering what to write next. I needed help breaking the code into sections. Running the program helped me see what those sections actually did. I added Jordan, Riley, and Morgan, and the printed structure showed who reported to whom. I also tested an occupied spot and a manager who did not exist, and both showed the correct error messages.
+
+Trees are useful when information has a hierarchy, like company positions or folders inside other folders. A tree makes those connections easier to represent than a flat list. This assignment helped me understand recursion better, although I still need more practice writing it.

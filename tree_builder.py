@@ -1,28 +1,87 @@
 class EmployeeNode:
-    '''
-    A class to represent a node in the binary tree.
-    Attributes:
-        name (str): The name of the employee.
-        left (EmployeeNode): The left child node, representing the left subordinate.
-        right (EmployeeNode): The right child node, representing the right subordinate.
-    '''
+    """Represents an employee and their direct reports."""
 
-    # Delete this line and implement the class below
-    pass
+    def __init__(self, name):
+        self.name = name
+        self.left = None
+        self.right = None
+
 
 class TeamTree:
-    '''
-    A class to represent a binary tree for managing a team structure.
-    Attributes:
-        root (EmployeeNode): The root node of the tree, representing the team lead.
-    Methods:
-        insert(manager_name, employee_name, side, current_node=None): Inserts a new employee under the specified manager.
-        print_tree(node=None, level=0): Prints the tree structure starting from the given node.
+    """Manages the employee reporting structure."""
 
-    '''
-    
-    # Delete this line and implement the class below
-    pass
+    def __init__(self):
+        self.root = None
+
+    def insert(self, manager_name, employee_name, side, current_node=None):
+        first_call = current_node is None
+
+        if first_call:
+            current_node = self.root
+
+            if current_node is None:
+                print("Add a team lead first.")
+                return False
+
+            if side not in ("left", "right"):
+                print("Please choose 'left' or 'right'.")
+                return False
+
+        # Check whether this employee is the requested manager.
+        if current_node.name == manager_name:
+            if side == "left":
+                if current_node.left is None:
+                    current_node.left = EmployeeNode(employee_name)
+                    print(f"{employee_name} added to the left of {manager_name}.")
+                else:
+                    print("This manager already has a left report.")
+
+            elif side == "right":
+                if current_node.right is None:
+                    current_node.right = EmployeeNode(employee_name)
+                    print(f"{employee_name} added to the right of {manager_name}.")
+                else:
+                    print("This manager already has a right report.")
+
+            return True
+
+        # Recursively search the left branch.
+        if current_node.left is not None:
+            found = self.insert(
+                manager_name, employee_name, side, current_node.left
+            )
+            if found:
+                return True
+
+        # Recursively search the right branch.
+        if current_node.right is not None:
+            found = self.insert(
+                manager_name, employee_name, side, current_node.right
+            )
+            if found:
+                return True
+
+        if first_call:
+            print(f"Manager '{manager_name}' was not found.")
+
+        return False
+
+    def print_tree(self, node=None, level=0):
+        if node is None and level == 0:
+            node = self.root
+
+            if node is None:
+                print("The team directory is empty.")
+                return
+
+        if node is None:
+            return
+
+        print("    " * level + "- " + node.name)
+
+        self.print_tree(node.left, level + 1)
+        self.print_tree(node.right, level + 1)
+
 
 # Test your code here
 
@@ -70,3 +129,9 @@ def company_directory():
             break
         else:
             print("❌ Invalid option. Try again.")
+
+if __name__ == "__main__":
+    company_directory()
+
+
+    
